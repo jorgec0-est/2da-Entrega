@@ -218,13 +218,77 @@ public class Main {
 
     // gestion de usuario del menú admin
     public static void gestionUsuario(){
-        System.out.println("-- Gestión de usuarios --");
-        System.out.println("1. Agregar usuario");
-        System.out.println("2. Sancionar usuario");
-        System.out.println("3. Eliminar usuario");
-        System.out.println("4. Ver usuario");
-        System.out.println("4. Salir");
-        System.out.println("> ");
+        do {
+            System.out.println("-- Gestión de usuarios --");
+            System.out.println("1. Agregar usuario");
+            System.out.println("2. Sancionar usuario");
+            System.out.println("3. Eliminar usuario");
+            System.out.println("4. Ver usuarios");
+            System.out.println("5. Salir");
+            System.out.print("> ");
+
+            if (leer.hasNextInt()) {
+                opc = leer.nextInt();
+                leer.nextLine();
+
+                switch (opc) {
+                    case 1 -> {
+                        System.out.println("Agregar usuario");
+                        // aquí llamas tu método o lógica
+                        registrarAlumno();
+                    }
+
+                    case 2 -> {
+                        System.out.println("Sancionar usuario");
+
+                    }
+
+                    case 3 -> {
+                        System.out.println("Eliminar usuario");
+                        for (int i = 0; i < usuarios.size(); i++) {
+                            System.out.println(i + ".- " + usuarios.get(i));
+                        }
+
+                        System.out.println("Seleccione usuario que desea eliminar:");
+                        System.out.print("> ");
+
+                        if (leer.hasNextInt()) {
+                            int index = leer.nextInt();
+                            leer.nextLine();
+                            if (index >= 0 && index < usuarios.size()) {
+                                System.out.println("Usuario eliminado: " + usuarios.get(index));
+                                usuarios.remove(index);
+                                contraseñas.remove(index);
+                            } else {
+                                System.out.println("Índice inválido");
+                            }
+
+                        } else {
+                            System.out.println("Debe ingresar un número");
+                            leer.nextLine();
+                        }
+                    }
+
+                    case 4 -> {
+                        System.out.println("Lista de usuarios:");
+                        // for each
+                        for (String u : usuarios) {
+                            System.out.println("- " + u);
+                        }
+                    }
+
+                    case 5 -> {
+                        System.out.println("Saliendo de gestión de usuarios...");
+                        return;
+                    }
+
+                    default -> System.out.println("Opción inválida");
+                }
+            } else {
+                System.out.println("Ingrese un número válido");
+                leer.nextLine();
+            }
+        } while (true);
     }
 
     public static void gestionarPrestYDev(){
