@@ -1,15 +1,44 @@
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.Scanner;
+
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
+
+        // Empieza todo
+
+        menu();
+
+
     }
+
+
+
+    // Este es el menú principal
+    public static void menu(){
+        Scanner leer = new Scanner(System.in);
+        int opc;
+        System.out.println("----------------");
+        System.out.println("-- Seleccione opción --");
+        System.out.println("1. Usuario admin");
+        System.out.println("2. Usuario normal");
+        opc = leer.nextInt();
+        switch (opc){
+            // Admin
+            case 1 -> {
+                System.out.println("-- Usuario admin --");
+
+            }
+
+            case 2 -> {
+                System.out.println("-- Usuario normal --");
+            }
+
+        }
+
+    }
+    // Este es el inicio de sesión
 }
