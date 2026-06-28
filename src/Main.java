@@ -13,13 +13,12 @@ public class Main {
     static ArrayList<String> autores = new ArrayList<>();// guarda el autor de cada libro
     static ArrayList<Boolean> disponible = new ArrayList<>();// guarda el estado del libro : true si el libro esta y false si el libro se lo llevaron prestado
 
-    static int UserOnline = -1;
-
     public static void main(String[] args) {
+        usuarios.add("Tommy");
+        contraseñas.add("1234");
         libros.add("Papelucho ");
         autores.add("Marcela Paz");
         disponible.add(true);
-
         // Empieza todo
         menu();
     }
@@ -70,6 +69,7 @@ public class Main {
         // Solo un usuario admin
         String UserAdmin = "admin";
         String passwordAd = "1234";
+
 
         switch (opc) {
             case 1 -> {// administrador
@@ -126,7 +126,6 @@ public class Main {
                         for (int i = 0; i < usuarios.size(); i++) {
                             if (username.equals(usuarios.get(i)) && passwordUser.equals(contraseñas.get(i))) {
                                 Found = true;
-                                UserOnline = i;
                                 break;
 
                             }
@@ -140,7 +139,6 @@ public class Main {
                             System.out.println("Usuario o contraseña incorrectos");
                             System.out.println("intentos restantes: " + intentos);
                         }
-
                     }
 
                 } else if (eleccion == 2){//regresar al menu
@@ -227,48 +225,96 @@ public class Main {
                 leer.nextLine();
 
                 switch (opc) {
+
+                    // No listo
                     case 1 -> {
                         System.out.println("Agregar usuario");
-                        // aquí llamas tu método o lógica
                         registrarAlumno();
                     }
-
+                    // No listo
                     case 2 -> {
-                        System.out.println("Sancionar usuario");
+                        System.out.println("-- Sancionar usuario --");
 
-                    }
-
-                    case 3 -> {
-                        System.out.println("Eliminar usuario");
                         for (int i = 0; i < usuarios.size(); i++) {
                             System.out.println(i + ".- " + usuarios.get(i));
                         }
-
-                        System.out.println("Seleccione usuario que desea eliminar:");
-                        System.out.print("> ");
-
+                        System.out.println("-- Seleccione usuario --");
                         if (leer.hasNextInt()) {
-                            int index = leer.nextInt();
+                            opc = leer.nextInt();
                             leer.nextLine();
-                            if (index >= 0 && index < usuarios.size()) {
-                                System.out.println("Usuario eliminado: " + usuarios.get(index));
-                                usuarios.remove(index);
-                                contraseñas.remove(index);
-                            } else {
-                                System.out.println("Índice inválido");
-                            }
 
+                            // Verificar
+                            if (opc >= 0 && opc < usuarios.size()) {
+                                System.out.println("Se eliminará este usuario de manera permanente, ¿está seguro?");
+                                System.out.println("s/n");
+                                String decidir = leer.nextLine();
+                                if (decidir.equalsIgnoreCase("s")) {
+                                    usuarios.remove(opc);
+                                    System.out.println("Usuario eliminado correctamente.");
+                                } else if (decidir.equalsIgnoreCase("n")) {
+                                    System.out.println("Operación cancelada.");
+
+                                } else {
+                                    System.out.println("Dato inválido.");
+
+                                }
+                            } else {
+                                System.out.println("Usuario inexistente.");
+                            }
                         } else {
-                            System.out.println("Debe ingresar un número");
+
+                            System.out.println("Debe ingresar un número.");
                             leer.nextLine();
+
                         }
                     }
 
+                    // Eliminación de usuarios a través de gestion usuarios (LISTO)
+                    case 3 -> {
+                        System.out.println("-- Sancionar usuario --");
+
+                        for (int i = 0; i < usuarios.size(); i++) {
+                            System.out.println(i + ".- " + usuarios.get(i));
+                        }
+                        System.out.println("-- Seleccione usuario --");
+                        if (leer.hasNextInt()) {
+                            opc = leer.nextInt();
+                            leer.nextLine();
+                            // Verificar
+                            if (opc >= 0 && opc < usuarios.size()) {
+                                System.out.println("Se eliminará este usuario de manera permanente, ¿está seguro?");
+                                System.out.println("s/n");
+                                String decidir = leer.nextLine();
+
+                                // Ignore case es para que permita poner S o s (mayuscula o miniscula)
+                                if (decidir.equalsIgnoreCase("s")) {
+                                    usuarios.remove(opc);
+                                    contraseñas.remove(opc);
+
+                                    System.out.println("Usuario eliminado correctamente.");
+                                } else if (decidir.equalsIgnoreCase("n")) {
+                                    System.out.println("Operación cancelada.");
+
+                                } else {
+                                    System.out.println("Dato inválido.");
+
+                                }
+                            } else {
+                                System.out.println("Usuario inexistente.");
+                            }
+                        } else {
+                            System.out.println("Debe ingresar un número.");
+                            leer.nextLine();
+
+                        }
+                    }
+                    // LISTO
                     case 4 -> {
+                        System.out.println("Cantidad de alumnos: " + usuarios.size());
                         System.out.println("Lista de usuarios:");
-                        // for each
-                        for (String u : usuarios) {
-                            System.out.println("- " + u);
+                        // for normal
+                        for (int i = 0; i < usuarios.size(); i++) {
+                            System.out.println(i + ".- " + usuarios.get(i));
                         }
                     }
 
@@ -284,6 +330,7 @@ public class Main {
                 leer.nextLine();
             }
         } while (true);
+        // Fin gestión usuarios
     }
 
     public static void gestionarPrestYDev(){
