@@ -3,53 +3,56 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
+
+    // Funciona para todos los métodos del Main
+    static Scanner leer = new Scanner(System.in);
     static ArrayList<String> usuarios = new ArrayList<>();
     static ArrayList<String> contraseñas = new ArrayList<>();
     public static void main(String[] args) {
 
         // Empieza todo
         menu();
-
-
     }
 
     // Este es el menú principal
-    public static void menu(){
-        Scanner leer = new Scanner(System.in);
-        int opc;
-        System.out.println("----------------");
-        System.out.println("-- Seleccione opción --");
-        System.out.println("1. Usuario admin");
-        System.out.println("2. Usuario normal");
-        opc = leer.nextInt();
-        switch (opc){
-            // Admin
-            case 1 -> {
-                System.out.println("-- Usuario admin --");
-                System.out.println("Cargando...");
-                System.out.println(" ");
-                iniciosesion(1);
+    public static void menu() {
+        do {
+            int opc;
+            System.out.println("----------------");
+            System.out.println("-- Seleccione opción --");
+            System.out.println("1. Usuario admin");
+            System.out.println("2. Usuario normal");
+            System.out.print("> ");
+            // VADILACIÓN
+            if (leer.hasNextInt()) {
+                opc = leer.nextInt();
+                leer.nextLine(); // Poner esto siempre después de ingresar un dato int
+                switch (opc) {
+                    // Admin
+                    case 1 -> {
+                        System.out.println("-- Usuario admin --");
+                        System.out.println(" ");
+                        inicioSesion(1);
+                        return;
+                    }
+
+                    case 2 -> {
+                        System.out.println("-- Usuario normal --");
+                        System.out.println(" ");
+                        inicioSesion(2);
+                        return;
+                    }
+                    default -> System.out.println("Opción inválida ");
+                }
+            } else {
+                System.out.println("Opción inválida");
+                leer.nextLine(); // Poner esto para que causar un ciclo infinito
             }
-
-            case 2 -> {
-                System.out.println("-- Usuario normal --");
-                System.out.println("Cargando...");
-                System.out.println(" ");
-                iniciosesion(2);
-            }
-
-            default ->{
-                System.out.println("Esta opcion no existe :( ");
-                menu();
-            }
-
-        }
-
+        } while (true);
     }
     // Este es el inicio de sesión
-    public static void iniciosesion(int opc){
-        Scanner leer = new Scanner (System.in);
-
+    public static void inicioSesion(int opc){
+        // Solo un usuario admin
         String UserAdmin = "admin";
         String passwordAd = "1234";
 
@@ -57,7 +60,6 @@ public class Main {
             case 1 -> {// administrador
 
                 int  intentos = 3;
-
                 while(intentos>0){
 
                     System.out.println("Ingrese nombre del usuario");
@@ -80,7 +82,8 @@ public class Main {
                 System.out.println("Regresando al menu...");
                 menu();
             }
-            case 2->{//usuario // hacer contador y limite de intentos
+            case 2->{
+                //usuario // hacer contador y limite de intentos
                 int eleccion = 0;
                 System.out.println("¿que desea hacer?");
 
@@ -138,7 +141,7 @@ public class Main {
 
                 }else{
                     System.out.println("Esta opcion no existe");
-                    iniciosesion(2);
+                    inicioSesion(2);
                 }
             }
         }
@@ -149,6 +152,4 @@ public class Main {
     public static void MenuUser(){// menu de usuario
 
     }
-
-    // Este es mi comentario
 }
