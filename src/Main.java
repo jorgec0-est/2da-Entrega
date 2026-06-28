@@ -14,6 +14,8 @@ public class Main {
     static ArrayList<Boolean> disponible = new ArrayList<>();// guarda el estado del libro : true si el libro esta y false si el libro se lo llevaron prestado
     static ArrayList<String> comentarioUser = new ArrayList<>(); // Comenta acciones del usuario
 
+    static int UserOnline = -1;
+
     public static void main(String[] args) {
         libros.add("Papelucho ");
         autores.add("Marcela Paz");
@@ -196,9 +198,7 @@ public class Main {
 
     }
 
-    public static void registrarAlumno(){
-        //para creear nuevas cuentas de estudiantes
-
+    public static void registrarAlumno(){//para creear nuevas cuentas de estudiantes
         System.out.println("Registro nuevo alumno");
         System.out.println("ingrese el nombre de usuario del alumno");
         String nuevoUser= leer.nextLine();
