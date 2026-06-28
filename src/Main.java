@@ -12,6 +12,7 @@ public class Main {
     static ArrayList<String> libros = new ArrayList<>(); // guarda los nombres de los libros
     static ArrayList<String> autores = new ArrayList<>();// guarda el autor de cada libro
     static ArrayList<Boolean> disponible = new ArrayList<>();// guarda el estado del libro : true si el libro esta y false si el libro se lo llevaron prestado
+    static ArrayList<String> comentarioUser = new ArrayList<>(); // Comenta acciones del usuario
 
     public static void main(String[] args) {
         libros.add("Papelucho ");
@@ -195,14 +196,14 @@ public class Main {
 
     }
 
-    public static void registrarAlumno(){//para creear nuevas cuentas de estudiantes
+    public static void registrarAlumno(){
+        //para creear nuevas cuentas de estudiantes
+
         System.out.println("Registro nuevo alumno");
         System.out.println("ingrese el nombre de usuario del alumno");
         String nuevoUser= leer.nextLine();
-
         System.out.println("asigne una contraseña para el alumno");
         String nuevaPass = leer.nextLine();
-
         usuarios.add(nuevoUser);
         contraseñas.add(nuevaPass);
         System.out.println("la cuenta ha sido creada con existo");
