@@ -6,6 +6,7 @@ public class Main {
 
     // Funciona para todos los métodos del Main
     static Scanner leer = new Scanner(System.in);
+    static int opc;
     static ArrayList<String> usuarios = new ArrayList<>();
     static ArrayList<String> contraseñas = new ArrayList<>();
     static ArrayList<String> libros = new ArrayList<>(); // guarda los nombres de los libros
@@ -24,12 +25,11 @@ public class Main {
     // Este es el menú principal
     public static void menu() {
         do {
-            int opc;
             System.out.println("----------------");
             System.out.println("-- Seleccione opción --");
             System.out.println("1. Usuario admin");
             System.out.println("2. Usuario normal");
-            x
+            System.out.println("3. Salir");
             System.out.print("> ");
             // VADILACIÓN
             if (leer.hasNextInt()) {
@@ -48,6 +48,10 @@ public class Main {
                         System.out.println("-- Usuario normal --");
                         System.out.println(" ");
                         inicioSesion(2);
+                        return;
+                    }
+                    case 3 -> {
+                        System.out.println("Saliendo . . .");
                         return;
                     }
                     default -> System.out.println("Opción inválida ");
@@ -78,7 +82,7 @@ public class Main {
                     passwordAd = leer.nextLine();
 
                     if (UserAdmin.equals("admin") && passwordAd.equals("1234")) {
-                        System.out.println("bienvenido administrador");
+                        System.out.println("-- Bienvenido administrador --");
                         MenuAd();
                         return;
                     } else {
@@ -156,25 +160,26 @@ public class Main {
         }
     }
 
+    // menu admin
     public static void MenuAd() {// menu de administrador
-        int opc;
         do {
-            System.out.println("Panel Administraccion de la Biblioeteca");
-            System.out.println("1. Registrar nuevo alumno(Crear cuenta)");
-            System.out.println("2.Agregar nuevo libro al catalogo");
-            System.out.println("3. Cerrar sesion y volver al menu principal");
-            System.out.print(">");// es para decirle al usuario donde escribir no mas
+            System.out.println("seleccione lo que desee realizar");
+            System.out.println("1. Gestionar libro");
+            System.out.println("2. Gestionar usuario");
+            System.out.println("3. Gestionar préstamos y devoluciones");
+            System.out.println("4. Salir");
+            System.out.print("> ");// es para decirle al usuario donde escribir no mas
 
             if (leer.hasNextInt()) {//para preguntar si tiene un numero entero (has)
                 opc = leer.nextInt();
                 leer.nextLine();
 
                 switch (opc) {
-                    case 1 -> mostrarlibro();
-                    case 2 -> prestarlibro();
-                    case 3 -> devolverlibro();
+                    case 1 -> gestionLibro();
+                    case 2 -> gestionUsuario();
+                    case 3 -> gestionarPrestYDev();
                     case 4 -> {
-                        System.out.println("Cerrando sesion del alumno");
+                        System.out.println("Cerrando sesión ");
                         menu();
                         return;
                     }
@@ -205,10 +210,24 @@ public class Main {
 
     public static void MenuUser() {// menu de usuario
 
-
     }
 
     public static void gestionLibro(){
+
+    }
+
+    // gestion de usuario del menú admin
+    public static void gestionUsuario(){
+        System.out.println("-- Gestión de usuarios --");
+        System.out.println("1. Agregar usuario");
+        System.out.println("2. Sancionar usuario");
+        System.out.println("3. Eliminar usuario");
+        System.out.println("4. Ver usuario");
+        System.out.println("4. Salir");
+        System.out.println("> ");
+    }
+
+    public static void gestionarPrestYDev(){
 
     }
 
