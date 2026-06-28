@@ -13,6 +13,8 @@ public class Main {
     static ArrayList<String> autores = new ArrayList<>();// guarda el autor de cada libro
     static ArrayList<Boolean> disponible = new ArrayList<>();// guarda el estado del libro : true si el libro esta y false si el libro se lo llevaron prestado
 
+    static int UserOnline = -1;
+
     public static void main(String[] args) {
         libros.add("Papelucho ");
         autores.add("Marcela Paz");
@@ -102,29 +104,17 @@ public class Main {
 
                 System.out.println(" ");
 
-                System.out.println("1.-crear usuario");
-                System.out.println("2.-iniciar sesion");
+                System.out.println("1.-iniciar sesion");
+                System.out.println("2.-Regresar al menu");
                 eleccion = leer.nextInt();
                 leer.nextLine();
 
                 if (eleccion == 1) { // primera opcion crear usuario
-                    System.out.println("ingrese su nombre de usuario a crear: ");
-                    String username = leer.nextLine();
-
-                    System.out.println("ingrese contraseña: ");
-                    String passwordUser = leer.nextLine();
-
-                    usuarios.add(username);
-                    contraseñas.add(passwordUser);
-
-                    System.out.println("Su usuario a sido creado correctamente");
-                    menu();
-
-                } else if (eleccion == 2) {// segunda opcion iniciar sesion
                     int intentos = 3;
 
                     while (intentos > 0) {
-
+                        System.out.println("--Iniciar sesion--");
+                        System.out.println(" ");
                         System.out.println("Ingrese su usuario");
                         String username = leer.nextLine();
 
@@ -136,6 +126,7 @@ public class Main {
                         for (int i = 0; i < usuarios.size(); i++) {
                             if (username.equals(usuarios.get(i)) && passwordUser.equals(contraseñas.get(i))) {
                                 Found = true;
+                                UserOnline = i;
                                 break;
 
                             }
@@ -151,6 +142,10 @@ public class Main {
                         }
 
                     }
+
+                } else if (eleccion == 2){//regresar al menu
+                    System.out.println("regresando al menu...");
+                   menu();
 
                 } else {
                     System.out.println("Esta opcion no existe");
@@ -195,7 +190,7 @@ public class Main {
 
     }
 
-    public static void registrarAlumno(){//para creear nuevas cuentas de estudiantes
+    public static void registrarAlumno(){//para crear nuevas cuentas de estudiantes
         System.out.println("Registro nuevo alumno");
         System.out.println("ingrese el nombre de usuario del alumno");
         String nuevoUser= leer.nextLine();
