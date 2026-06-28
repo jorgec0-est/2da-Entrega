@@ -109,7 +109,7 @@ public class Main {
                 eleccion = leer.nextInt();
                 leer.nextLine();
 
-                if (eleccion == 1) { // primera opcion iniciar sesion
+                if (eleccion == 1) { // primera opcion crear usuario
                     int intentos = 3;
 
                     while (intentos > 0) {
@@ -208,7 +208,6 @@ public class Main {
     }
 
     public static void gestionLibro(){
-
 
     }
 
