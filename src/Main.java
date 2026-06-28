@@ -152,4 +152,9 @@ public class Main {
     public static void MenuUser(){// menu de usuario
 
     }
+
+    public static void gestionLibro(){
+
+    }
+
 }
