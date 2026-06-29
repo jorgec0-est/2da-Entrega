@@ -368,12 +368,14 @@ public class Main {
                             if (leer.hasNextInt()){
                                 int opc =leer.nextInt();
                                 leer.nextLine();
-                                if (opc>= 0 && opc < nombreLibro.size());
-                                System.out.println("Comentario actual"+comentarios.get(opc));
-                                System.out.print("Nuevo comentario ");
-                                String nuevocomentario=leer.nextLine();
-                                comentarios.set(opc ,  nuevocomentario);
-                                System.out.println("comentario actualizado");
+                                if (opc>= 0 && opc < nombreLibro.size()){
+                                    System.out.println("Comentario actual"+comentarios.get(opc));
+                                    System.out.print("Nuevo comentario ");
+                                    String nuevocomentario=leer.nextLine();
+                                    comentarios.set(opc ,  nuevocomentario);
+                                    System.out.println("comentario actualizado");
+                                }
+
                             }else{
                                 System.out.println("debe ingresar un numero ");
                                 leer.nextLine();
@@ -466,7 +468,7 @@ public class Main {
                                 System.out.println("s/n");
                                 String decidir = leer.nextLine();
                                 if (decidir.equalsIgnoreCase("s")) {
-                                    comentarios.add(opc , c);
+                                    comentarios.set(opc , c);
                                     System.out.println("Comentario agregado");
 
                                 } else if (decidir.equalsIgnoreCase("n")) {
@@ -507,6 +509,9 @@ public class Main {
                                 if (decidir.equalsIgnoreCase("s")) {
                                     nombreUser.remove(opc);
                                     passwordUser.remove(opc);
+                                    comentarios.remove(opc);
+                                    sancion.remove(opc);
+                                    libroPrest.remove(opc);
 
 
                                     System.out.println("Usuario eliminado correctamente.");
@@ -573,7 +578,7 @@ public class Main {
         System.out.println("-- Préstamos y devoluciones --");
         System.out.println("1. Registrar préstamo");
         System.out.println("2. Registrar devolución");
-        System.out.println("4. Salir");
+        System.out.println("3-. Salir");
         System.out.print("> ");
         opc = leer.nextInt();
         leer.nextLine();
@@ -597,6 +602,11 @@ public class Main {
                     leer.nextLine();
                     // Validar libro
                     if (opc >= 0 && opc < nombreLibro.size()) {
+                        // cbros añadi esto para ver si el libro ya esta prestado
+                        if(estado.get(opc).equals("Prestado")){
+                            System.out.println("Este libro no esta disponible por el momento");
+                            return;
+                        }
                         // Mostrar usuarios
                         for (int i = 0; i < nombreUser.size(); i++) {
                             System.out.println(i + ".- " + nombreUser.get(i));
@@ -610,6 +620,7 @@ public class Main {
                             if (m >= 0 && m < nombreUser.size()) {
                                 String libro = nombreLibro.get(opc);
                                 libroPrest.set(m, libro);
+                                estado.set(opc,"Prestado");
                                 System.out.println("Préstamo registrado correctamente.");
                             } else {
                                 System.out.println("Usuario inexistente.");
@@ -625,8 +636,11 @@ public class Main {
                     leer.nextLine();
                 }
             }
-            case 2 -> {
+            case 2 -> {// esto es lo que esta haciendo el hugo devolver libros
                 System.out.println(2);
+            }
+            case 3-> {
+                return;
             }
         }
     }
