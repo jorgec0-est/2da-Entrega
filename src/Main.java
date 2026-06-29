@@ -55,8 +55,7 @@ public class Main {
                     }
 
                     case 2 -> {
-                        System.out.println("-- Usuario normal --");
-                        System.out.println(" ");
+                        System.out.println("-- Usuario normal --");System.out.println(" ");
                         inicioSesion(2);
                         return;
                     }
