@@ -53,7 +53,10 @@ public class Main {
     // Este es el inicio de sesión
     public static void inicioSesion(int opc){
         // Solo un usuario admin
-        String UserAdmin = "admin";
+
+
+
+            String UserAdmin = "admin";
         String passwordAd = "1234";
 
         switch(opc){
