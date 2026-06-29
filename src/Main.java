@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
@@ -7,18 +6,28 @@ public class Main {
     // Funciona para todos los métodos del Main
     static Scanner leer = new Scanner(System.in);
     static int opc;
-    static ArrayList<String> usuarios = new ArrayList<>();
-    static ArrayList<String> contraseñas = new ArrayList<>();
-    static ArrayList<String> libros = new ArrayList<>(); // guarda los nombres de los libros
-    static ArrayList<String> autores = new ArrayList<>();// guarda el autor de cada libro
-    static ArrayList<Boolean> disponible = new ArrayList<>();// guarda el estado del libro : true si el libro esta y false si el libro se lo llevaron prestado
-
+    static ArrayList<String> nombreUser = new ArrayList<>();
+    static ArrayList<String> passwordUser = new ArrayList<>();
+    static ArrayList<String> nombreLibro = new ArrayList<>(); // guarda los nombres de los nombreLibro
+    static ArrayList<String> autorLibro = new ArrayList<>();// guarda el autor de cada libro
+    static ArrayList<String> estado = new ArrayList<>();// guarda el estado del libro : true si el libro esta y false si el libro se lo llevaron prestado
+    static ArrayList<String> comentarios = new ArrayList<>();
+    static ArrayList<Integer> sancion = new ArrayList<>();
+    static ArrayList<String> libroPrest = new ArrayList<>();
     public static void main(String[] args) {
-        usuarios.add("Tommy");
-        contraseñas.add("1234");
-        libros.add("Papelucho ");
-        autores.add("Marcela Paz");
-        disponible.add(true);
+        // Primer estudiante por defecto
+        nombreUser.add("Tommy");
+        passwordUser.add("1234");
+        comentarios.add("SIN COMENTARIO");
+        sancion.add(0);
+        libroPrest.add("Ninguno");
+
+
+        // clase libro
+        nombreLibro.add("Papelucho ");
+        autorLibro.add("Marcela Paz");
+        estado.add("Disponible");
+
         // Empieza todo
         menu();
     }
@@ -102,14 +111,12 @@ public class Main {
                 int eleccion = 0;
                 System.out.println("¿que desea hacer?");
 
-                System.out.println(" ");
-
-                System.out.println("1.-iniciar sesion");
-                System.out.println("2.-Regresar al menu");
+                System.out.println("1. iniciar sesion");
+                System.out.println("2. Salir");
                 eleccion = leer.nextInt();
                 leer.nextLine();
 
-                if (eleccion == 1) { // primera opcion crear usuario
+                if (eleccion == 1) {
                     int intentos = 3;
 
                     while (intentos > 0) {
@@ -123,8 +130,8 @@ public class Main {
 
                         boolean Found = false;
 
-                        for (int i = 0; i < usuarios.size(); i++) {
-                            if (username.equals(usuarios.get(i)) && passwordUser.equals(contraseñas.get(i))) {
+                        for (int i = 0; i < nombreUser.size(); i++) {
+                            if (username.equals(nombreUser.get(i)) && passwordUser.equals(Main.passwordUser.get(i))) {
                                 Found = true;
                                 break;
 
@@ -196,8 +203,12 @@ public class Main {
         System.out.println("asigne una contraseña para el alumno");
         String nuevaPass = leer.nextLine();
 
-        usuarios.add(nuevoUser);
-        contraseñas.add(nuevaPass);
+        nombreUser.add(nuevoUser);
+        passwordUser.add(nuevaPass);
+        comentarios.add("SIN COMENTARIOS");
+        sancion.add(0);
+        libroPrest.add("Ninguno");
+
         System.out.println("la cuenta ha sido creada con existo");
     }
 
@@ -214,9 +225,9 @@ public class Main {
         do {
             System.out.println("-- Gestión de usuarios --");
             System.out.println("1. Agregar usuario");
-            System.out.println("2. Sancionar usuario");
+            System.out.println("2. Sancionar usuario y comentarios");
             System.out.println("3. Eliminar usuario");
-            System.out.println("4. Ver usuarios");
+            System.out.println("4. Ver usuario");
             System.out.println("5. Salir");
             System.out.print("> ");
 
@@ -233,10 +244,10 @@ public class Main {
                     }
                     // No listo
                     case 2 -> {
-                        System.out.println("-- Sancionar usuario --");
+                        System.out.println("-- Sancionar usuario y comentarios --");
 
-                        for (int i = 0; i < usuarios.size(); i++) {
-                            System.out.println(i + ".- " + usuarios.get(i));
+                        for (int i = 0; i < nombreUser.size(); i++) {
+                            System.out.println(i + ".- " + nombreUser.get(i));
                         }
                         System.out.println("-- Seleccione usuario --");
                         if (leer.hasNextInt()) {
@@ -244,13 +255,17 @@ public class Main {
                             leer.nextLine();
 
                             // Verificar
-                            if (opc >= 0 && opc < usuarios.size()) {
-                                System.out.println("Se eliminará este usuario de manera permanente, ¿está seguro?");
+                            if (opc >= 0 && opc < nombreUser.size()) {
+                                System.out.print("Agrega comentario: ");
+                                String c = leer.nextLine();
+
+                                System.out.println("¿Está seguro de que desea agregar ese comentario?");
                                 System.out.println("s/n");
                                 String decidir = leer.nextLine();
                                 if (decidir.equalsIgnoreCase("s")) {
-                                    usuarios.remove(opc);
-                                    System.out.println("Usuario eliminado correctamente.");
+                                    comentarios.add(c);
+                                    System.out.println("Comentario agregado");
+
                                 } else if (decidir.equalsIgnoreCase("n")) {
                                     System.out.println("Operación cancelada.");
 
@@ -269,35 +284,33 @@ public class Main {
                         }
                     }
 
-                    // Eliminación de usuarios a través de gestion usuarios (LISTO)
+                    // Eliminación de nombreUser a través de gestion nombreUser (LISTO)
                     case 3 -> {
-                        System.out.println("-- Sancionar usuario --");
-
-                        for (int i = 0; i < usuarios.size(); i++) {
-                            System.out.println(i + ".- " + usuarios.get(i));
+                        System.out.println("-- Eliminar usuario --");
+                        for (int i = 0; i < nombreUser.size(); i++) {
+                            System.out.println(i + ".- " + nombreUser.get(i));
                         }
                         System.out.println("-- Seleccione usuario --");
                         if (leer.hasNextInt()) {
                             opc = leer.nextInt();
                             leer.nextLine();
                             // Verificar
-                            if (opc >= 0 && opc < usuarios.size()) {
+                            if (opc >= 0 && opc < nombreUser.size()) {
                                 System.out.println("Se eliminará este usuario de manera permanente, ¿está seguro?");
                                 System.out.println("s/n");
                                 String decidir = leer.nextLine();
 
                                 // Ignore case es para que permita poner S o s (mayuscula o miniscula)
                                 if (decidir.equalsIgnoreCase("s")) {
-                                    usuarios.remove(opc);
-                                    contraseñas.remove(opc);
+                                    nombreUser.remove(opc);
+                                    passwordUser.remove(opc);
+
 
                                     System.out.println("Usuario eliminado correctamente.");
                                 } else if (decidir.equalsIgnoreCase("n")) {
                                     System.out.println("Operación cancelada.");
 
-                                } else {
-                                    System.out.println("Dato inválido.");
-
+                                } else {System.out.println("Dato inválido.");
                                 }
                             } else {
                                 System.out.println("Usuario inexistente.");
@@ -310,19 +323,39 @@ public class Main {
                     }
                     // LISTO
                     case 4 -> {
-                        System.out.println("Cantidad de alumnos: " + usuarios.size());
+                        System.out.println("-----------------------------------------");
+                        System.out.println("Cantidad de alumnos: " + nombreUser.size());
                         System.out.println("Lista de usuarios:");
                         // for normal
-                        for (int i = 0; i < usuarios.size(); i++) {
-                            System.out.println(i + ".- " + usuarios.get(i));
+                        for (int i = 0; i < nombreUser.size(); i++) {
+                            System.out.println(i + ".- " + nombreUser.get(i));
+                        }
+                        System.out.println("1. seleccionar usuario");
+                        System.out.println("2. salir");
+                        opc = leer.nextInt();
+                        leer.nextLine();
+                        switch (opc){
+                            case 1 -> {
+                                System.out.print("seleccione: ");
+                                if (leer.hasNextInt()){
+                                    opc = leer.nextInt();
+                                    leer.nextLine();
+                                    System.out.println("-- Datos generales --");
+                                    System.out.println("Nombre: "+nombreUser.get(opc));
+                                    System.out.println("Comentarios: "+comentarios.get(opc));
+                                    System.out.println("Sacion: "+sancion.get(opc));
+                                    System.out.println("Libro prestado: "+libroPrest.get(opc));
+                                    System.out.println("- - - - - - - - - - -");
+                                } else {
+                                    System.out.println("Dato inválido");
+                                }
+                            }
                         }
                     }
-
                     case 5 -> {
                         System.out.println("Saliendo de gestión de usuarios...");
                         return;
                     }
-
                     default -> System.out.println("Opción inválida");
                 }
             } else {
@@ -330,7 +363,7 @@ public class Main {
                 leer.nextLine();
             }
         } while (true);
-        // Fin gestión usuarios
+        // Fin gestión nombreUser
     }
 
     public static void gestionarPrestYDev(){
