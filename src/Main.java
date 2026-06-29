@@ -266,6 +266,76 @@ public class Main {
     }
 
     public static void gestionLibro(){
+        do{
+            System.out.println("-Gestion de libros");
+            System.out.println("1,Agregar libros");
+            System.out.println("2.Eliminar Libro");
+            System.out.println("3.Ver lista de libros");
+            System.out.println("4.Agregar comentario de libros");
+            System.out.println("5.Editar Libros");
+            System.out.println("6.Salir");
+            System.out.println(" > ");
+
+            if (leer.hasNextInt()){//pregunto si escribio un numero, por si usuario usa nose letras
+                opc = leer.nextInt();
+                leer.nextLine();
+
+                switch (opc){
+                    case 1 ->{
+                        System.out.println("Agregar libro");
+
+                        System.out.print("Nombre del librp");
+                        String nuevoNombre = leer.nextLine();
+                        System.out.print("Autor del libro");
+                        String nuevoAutor = leer.nextLine();
+                        nombreLibro.add(nuevoNombre);
+                        autorLibro.add(nuevoAutor);
+                        estado.add("Disponible");
+                        comentarios.add("Sin comentarios");
+
+                        System.out.println("libro agregado ");
+
+                    }
+                    case 2 ->{
+                        System.out.println("Eliminar libros");
+
+                        if(nombreLibro.size()==0){
+                            System.out.println("No hay lirbos registrados");
+
+                        }else {
+                            for(int i =0; i <nombreLibro.size();i++)
+                                System.out.println(i+"-"+nombreLibro.get(i)+" Autor :"+autorLibro.get(i)+"Estado"+estado.get(i));
+                            System.out.print("Seleccione libro a eliminar: ");
+                            if(leer.hasNextInt()){
+                                int opc = leer.nextInt();
+                                leer.nextLine();
+                                if(opc >=0 && opc<nombreLibro.size()){
+                                    if (estado.get(opc).equals("Prestado")){
+                                        System.out.println("No se puede eliminar un libro prestado");
+                                    }else {
+                                        System.out.print("¿Está seguro? (si/no): ");
+                                        String confirmar = leer.nextLine();
+                                        if (confirmar.equalsIgnoreCase("si")){
+                                            String nombreEliminar = nombreLibro.get(opc);
+                                            String autorEliminar = autorLibro.get(opc);
+                                            String estadoEliminar = estado.get(opc);
+                                            String comentarioEliminar = comentarios.get(opc);
+                                            nombreLibro.remove(nombreEliminar);
+                                            autorLibro.remove(autorEliminar);
+                                            estado.remove(estadoEliminar);
+                                            comentarios.remove(comentarioEliminar);
+                                        }
+                                    }
+
+                                }
+                            }
+
+                        }
+
+                    }
+                }
+            }
+        }
 
     }
 
@@ -312,7 +382,7 @@ public class Main {
                                 System.out.println("s/n");
                                 String decidir = leer.nextLine();
                                 if (decidir.equalsIgnoreCase("s")) {
-                                    comentarios.add(c);
+                                    comentarios.add(opc , c);
                                     System.out.println("Comentario agregado");
 
                                 } else if (decidir.equalsIgnoreCase("n")) {
