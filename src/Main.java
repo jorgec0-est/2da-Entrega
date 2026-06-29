@@ -14,6 +14,7 @@ public class Main {
     static ArrayList<String> comentarios = new ArrayList<>();
     static ArrayList<Integer> sancion = new ArrayList<>();
     static ArrayList<String> libroPrest = new ArrayList<>();
+
     public static void main(String[] args) {
         // Primer estudiante por defecto
         nombreUser.add("Tommy");
@@ -415,7 +416,64 @@ public class Main {
     }
 
     public static void gestionarPrestYDev(){
+        System.out.println("-- Préstamos y devoluciones --");
+        System.out.println("1. Registrar préstamo");
+        System.out.println("2. Registrar devolución");
+        System.out.println("4. Salir");
+        System.out.print("> ");
+        opc = leer.nextInt();
+        leer.nextLine();
+        switch (opc) {
+            case 1 -> {
+                System.out.println("-- Registrando préstamo --");
+                // Hay libros?
+                if (nombreLibro.size() == 0) {
+                    System.out.println("No hay libros para prestar.");
+                    return;
+                }
+                // Mostrar libros
+                for (int i = 0; i < nombreLibro.size(); i++) {
+                    System.out.println(i + ".- " + nombreLibro.get(i));
+                }
 
+                System.out.println("Ingrese el libro que desea prestar");
+                System.out.print("> ");
+                if (leer.hasNextInt()) {
+                    opc = leer.nextInt();
+                    leer.nextLine();
+                    // Validar libro
+                    if (opc >= 0 && opc < nombreLibro.size()) {
+                        // Mostrar usuarios
+                        for (int i = 0; i < nombreUser.size(); i++) {
+                            System.out.println(i + ".- " + nombreUser.get(i));
+                        }
+                        System.out.println("Ingrese el usuario que recibirá el libro");
+                        System.out.print("> ");
+                        if (leer.hasNextInt()) {
+                            int m = leer.nextInt();
+                            leer.nextLine();
+                            // Validar usuario
+                            if (m >= 0 && m < nombreUser.size()) {
+                                String libro = nombreLibro.get(opc);
+                                libroPrest.set(m, libro);
+                                System.out.println("Préstamo registrado correctamente.");
+                            } else {
+                                System.out.println("Usuario inexistente.");
+                            }
+                        } else {
+                            System.out.println("Debe ingresar un número.");
+                            leer.nextLine();
+                        }
+                    } else { System.out.println("Libro inexistente.");
+                    }
+                } else {
+                    System.out.println("Debe ingresar un número.");
+                    leer.nextLine();
+                }
+            }
+            case 2 -> {
+                System.out.println(2);
+            }
+        }
     }
-
 }
