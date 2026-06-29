@@ -324,18 +324,100 @@ public class Main {
                                             autorLibro.remove(autorEliminar);
                                             estado.remove(estadoEliminar);
                                             comentarios.remove(comentarioEliminar);
+                                            System.out.println("Libro elimidado correctamente");
+                                        }else {
+                                            System.out.println("Operacion cancelada");
                                         }
                                     }
 
+                                }else{
+                                    System.out.println("Libro inexistente ");
                                 }
+                            }else{
+                                System.out.println("Debe ingresar su numero");
+                                leer.nextLine();
                             }
 
                         }
 
                     }
+                    case 3 ->{
+                        if (nombreLibro.size()==0){
+                            System.out.println("No hay libros registrados");
+                        }else{
+                            System.out.println("Total libros :"+nombreLibro.size());
+                            for (int i = 0; i < nombreLibro.size(); i++) {
+                                System.out.println(i+"Nombre"+nombreLibro.get(i));
+                                System.out.println("    Autor  : " + autorLibro.get(i));
+                                System.out.println("    Estado : " + estado.get(i));
+                                System.out.println("    Coment.: " + comentarios.get(i));
+                                System.out.println("   ---------");
+                            }
+
+                        }
+                    }
+                    case 4  ->{
+                        if (nombreLibro.size()==0){
+                            System.out.println("No hay libros registrados ");
+                        }else{
+                            for (int i = 0; i < nombreLibro.size(); i++)
+                                System.out.println(i+"-"+nombreLibro.get(i));
+                            System.out.println("seleccion un libro ");
+                            if (leer.hasNextInt()){
+                                int opc =leer.nextInt();
+                                leer.nextLine();
+                                if (opc>= 0 && opc < nombreLibro.size());
+                                System.out.println("Comentario actual"+comentarios.get(opc));
+                                System.out.print("Nuevo comentario ");
+                                String nuevocomentario=leer.nextLine();
+                                comentarios.set(opc ,  nuevocomentario);
+                                System.out.println("comentario actualizado");
+                            }else{
+                                System.out.println("debe ingresar un numero ");
+                                leer.nextLine();
+                            }
+                        }
+                    }
+                    case 5 ->{
+                        if (nombreLibro.size()==0){
+                            System.out.println("No hay libros registrados ");
+                        }else{
+                            for (int i = 0; i < nombreLibro.size(); i++)
+                                System.out.println(i+"- " + nombreLibro.get(i) + " Autor " + autorLibro.get(i));
+                            System.out.println("Seleccion del libro a editar");
+                            if (leer.hasNextInt()){
+                                int opc=leer.nextInt();
+                                leer.nextLine();
+                                if (opc>=0&&opc<nombreLibro.size()){
+                                    System.out.println("Nuevo nombre"+nombreLibro.get(opc));
+                                    String nuevonombre=leer.nextLine();
+                                    if (!nuevonombre.trim().isEmpty()) nombreLibro.set(opc, nuevonombre);
+                                    System.out.println("libro editado correctamente");
+
+
+
+                                }else{
+                                    System.out.println("Libro inexistente.");
+                                }
+                            }else{
+                                System.out.println("Debe ingresar un número.");
+                                leer.nextLine();
+                            }
+                        }
+                    }
+                    case 6 ->{
+                        System.out.println("salida de gestion de libros");
+                        return;
+                    }
+                    default -> System.out.println("opcion invalida");
+
                 }
+
+            }else{
+                System.out.println("Debe ingresar un número.");
+                leer.nextLine();
             }
-        }
+        }while(true);
 
     }
 
