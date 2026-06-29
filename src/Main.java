@@ -213,7 +213,55 @@ public class Main {
     }
 
     public static void MenuUser() {// menu de usuario
+        do {
+            System.out.println("\n MENU USUARIO ");
+            System.out.println("1 Ver libros disponibles");
+            System.out.println("2 Pedir libro");
+            System.out.println("3 Devolver libro");
+            System.out.println("4 Ver mi informacion");
+            System.out.println("5  Cerrar sesion");
+            System.out.print("> "); // para que el usuario escruba
 
+            if (leer.hasNextInt()) {
+                opc = leer.nextInt();
+                leer.nextLine();
+
+                switch (opc) {
+                    case 1 -> {
+                        System.out.println("\n-Libros disponibles -");
+                        for (int i = 0; i < nombreLibro.size(); i++) {
+                            System.out.println((i + 1) + ". " + nombreLibro.get(i)
+                                    + "Autor: " + autorLibro.get(i)
+                                    + "Estado: " + estado.get(i));
+                        }
+                    }// informacion de los libros
+
+                    case 2 -> {
+                        System.out.println("Función de prestamo");
+                    }
+
+                    case 3 -> {
+                        System.out.println("Función de devolucion");
+                    }
+
+                    case 4 -> {
+                        System.out.println("Funcion para ver datos del usuario");
+                    }
+
+                    case 5 -> {
+                        System.out.println("Cerrando sesión...");
+                        menu();
+                        return;
+                    }
+
+                    default -> System.out.println("Opción invalida");
+                }
+            } else {
+                System.out.println("Debe ingresar un numero");
+                leer.nextLine();
+            }// son las opciones del menu
+
+        } while (true);
     }
 
     public static void gestionLibro(){
