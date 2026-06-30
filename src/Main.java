@@ -222,7 +222,7 @@ public class Main {
 
         nombreUser.add(nuevoUser);
         passwordUser.add(nuevaPass);
-        comentarios.add("SIN COMENTARIOS");
+        cometarioUser.add(vacio);
         sancion.add(0);
         libroPrest.add("Ninguno");
 
@@ -332,7 +332,7 @@ public class Main {
                 System.out.println("Autor: " + autorLibro.get(i));
                 System.out.println("Estado: " + estado.get(i));
 
-                if (!comentarios.get(i).equalsIgnoreCase("Sin comentarios")) {
+                if (!comentarios.get(i).equalsIgnoreCase(vacio)) {
                     System.out.println("Comentario: " + comentarios.get(i));
                 }
 
@@ -500,16 +500,15 @@ public class Main {
     // metodo para mostrar toda la informacion del usuario
     public static void verMiInformacion() {
 
-        System.out.println("= MI INFORMACION =");
-
+        System.out.println("-- MI INFORMACION --");
         System.out.println("Nombre: " + nombreUser.get(usuarioActual));
-
         System.out.println("Libro prestado: " + libroPrest.get(usuarioActual));
-
         System.out.println("Sancion: " + sancion.get(usuarioActual));
-
-        System.out.println("Comentario: " + comentarios.get(usuarioActual));
-
+        if (cometarioUser .get(usuarioActual).equals(vacio)) {
+            System.out.println("Comentario: Sin comentario");
+        } else {
+            System.out.println("Comentario: " + cometarioUser .get(usuarioActual));
+        }
     }
 
     public static void gestionLibro() {
@@ -521,7 +520,7 @@ public class Main {
             System.out.println("4.Agregar comentario de libros");
             System.out.println("5.Editar Libros");
             System.out.println("6.Salir");
-            System.out.println(" > ");
+            System.out.print("> ");
 
             if (leer.hasNextInt()) {//pregunto si escribio un numero, por si usuario usa nose letras
                 opc = leer.nextInt();
@@ -538,7 +537,7 @@ public class Main {
                         nombreLibro.add(nuevoNombre);
                         autorLibro.add(nuevoAutor);
                         estado.add("Disponible");
-                        comentarios.add("Sin comentarios");
+                        comentarios.add(vacio);
 
                         System.out.println("libro agregado ");
 
@@ -701,22 +700,32 @@ public class Main {
 
                             // Verificar
                             if (opc >= 0 && opc < nombreUser.size()) {
-                                System.out.print("Agrega comentario: ");
-                                String c = leer.nextLine();
+                                System.out.println("Sancion actual: " + sancion.get(opc));
+                                System.out.print("Ingrese cantidad de sancion a agregar: ");
 
-                                System.out.println("¿Está seguro de que desea agregar ese comentario?");
-                                System.out.println("s/n");
-                                String decidir = leer.nextLine();
-                                if (decidir.equalsIgnoreCase("s")) {
-                                    comentarios.set(opc, c);
-                                    System.out.println("Comentario agregado");
+                                if (leer.hasNextInt()) {
+                                    int nuevaSancion = leer.nextInt();
+                                    leer.nextLine();
 
-                                } else if (decidir.equalsIgnoreCase("n")) {
-                                    System.out.println("Operación cancelada.");
+                                    System.out.print("Agrega comentario: ");
+                                    String c = leer.nextLine();
 
+                                    System.out.println("¿Está seguro de que desea aplicar esta sancion y comentario?");
+                                    System.out.println("s/n");
+                                    String decidir = leer.nextLine();
+                                    if (decidir.equalsIgnoreCase("s")) {
+                                        int total = sancion.get(opc) + nuevaSancion;
+                                        sancion.set(opc, total);
+                                        cometarioUser.set(opc, c);
+                                        System.out.println("Sancion y comentario agregados");
+                                    } else if (decidir.equalsIgnoreCase("n")) {
+                                        System.out.println("Operación cancelada.");
+                                    } else {
+                                        System.out.println("Dato inválido.");
+                                    }
                                 } else {
-                                    System.out.println("Dato inválido.");
-
+                                    System.out.println("Debe ingresar un número.");
+                                    leer.nextLine();
                                 }
                             } else {
                                 System.out.println("Usuario inexistente.");
@@ -747,12 +756,12 @@ public class Main {
 
                                 // Ignore case es para que permita poner S o s (mayuscula o miniscula)
                                 if (decidir.equalsIgnoreCase("s")) {
+
                                     nombreUser.remove(opc);
                                     passwordUser.remove(opc);
-                                    comentarios.remove(opc);
+                                    cometarioUser.remove(opc);
                                     sancion.remove(opc);
                                     libroPrest.remove(opc);
-
 
                                     System.out.println("Usuario eliminado correctamente.");
                                 } else if (decidir.equalsIgnoreCase("n")) {
@@ -793,7 +802,7 @@ public class Main {
                                         if (opc >= 0 && opc < nombreUser.size()) {
                                             System.out.println("-- Datos generales --");
                                             System.out.println("Nombre: " + nombreUser.get(opc));
-                                            System.out.println("Comentarios: " + comentarios.get(opc));
+                                            System.out.println("Comentarios: " + cometarioUser.get(opc));
                                             System.out.println("Sacion: " + sancion.get(opc));
                                             System.out.println("Libro prestado: " + libroPrest.get(opc));
                                             System.out.println("- - - - - - - - - - -");
