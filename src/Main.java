@@ -518,9 +518,9 @@ public class Main {
                     case 1 ->{
                         System.out.println("Agregar libro");
 
-                        System.out.print("Nombwwre del libro");
+                        System.out.print("Nombre del libro: ");
                         String nuevoNombre = leer.nextLine();
-                        System.out.print("Autor del libro");
+                        System.out.print("Autor del libro: ");
                         String nuevoAutor = leer.nextLine();
                         nombreLibro.add(nuevoNombre);
                         autorLibro.add(nuevoAutor);
@@ -575,13 +575,13 @@ public class Main {
                         if (nombreLibro.size()==0){
                             System.out.println("No hay libros registrados");
                         }else{
-                            System.out.println("Total libros :"+nombreLibro.size());
+                            System.out.println("Total libros: "+nombreLibro.size());
                             for (int i = 0; i < nombreLibro.size(); i++) {
-                                System.out.println(i+"Nombre"+nombreLibro.get(i));
-                                System.out.println("    Autor  : " + autorLibro.get(i));
-                                System.out.println("    Estado : " + estado.get(i));
-                                System.out.println("    Coment.: " + comentarios.get(i));
-                                System.out.println("   ---------");
+                                System.out.println(i+". Nombre: "+nombreLibro.get(i));
+                                System.out.println("Autor: " + autorLibro.get(i));
+                                System.out.println("Estado: " + estado.get(i));
+                                System.out.println("Comentario: " + comentarios.get(i));
+                                System.out.println("--------------------");
                             }
 
                         }
@@ -592,12 +592,12 @@ public class Main {
                         }else{
                             for (int i = 0; i < nombreLibro.size(); i++)
                                 System.out.println(i+"-"+nombreLibro.get(i));
-                            System.out.println("seleccion un libro ");
+                            System.out.println("seleccione un libro: ");
                             if (leer.hasNextInt()){
                                 int opc =leer.nextInt();
                                 leer.nextLine();
                                 if (opc>= 0 && opc < nombreLibro.size()){
-                                    System.out.println("Comentario actual"+comentarios.get(opc));
+                                    System.out.println("Comentario actual: "+comentarios.get(opc));
                                     System.out.print("Nuevo comentario ");
                                     String nuevocomentario=leer.nextLine();
                                     comentarios.set(opc ,  nuevocomentario);
@@ -884,8 +884,10 @@ public class Main {
                 System.out.println(2);
             }
             case 3-> {
+                System.out.println("Saliendo . . .");
                 return;
             }
         }
     }
+    // CREADORES: Jorge Curvivil - Daniel Huentenao - Hugo Iturra - Nicolas Espinoza
 }
