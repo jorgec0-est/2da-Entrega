@@ -14,6 +14,7 @@ public class Main {
     static ArrayList<String> comentarios = new ArrayList<>();
     static ArrayList<Integer> sancion = new ArrayList<>();
     static ArrayList<String> libroPrest = new ArrayList<>();
+    static int usuarioActual = -1;
 
     public static void main(String[] args) {
         // Primer estudiante por defecto
@@ -134,7 +135,12 @@ public class Main {
                         boolean Found = false;
 
                         for (int i = 0; i < nombreUser.size(); i++) {
-                            if (username.equals(nombreUser.get(i)) && passwordUser.equals(Main.passwordUser.get(i))) {
+
+
+                            if (username.equals(nombreUser.get(i)) &&
+                                    passwordUser.equals(Main.passwordUser.get(i))) {
+
+                                usuarioActual = i;
                                 Found = true;
                                 break;
 
@@ -216,61 +222,287 @@ public class Main {
     }
 
     public static void MenuUser() {// menu de usuario
-        do {
-            System.out.println("\n MENU USUARIO ");
-            System.out.println("1 Ver libros disponibles");
-            System.out.println("2 Pedir libro");
-            System.out.println("3 Devolver libro");
-            System.out.println("4 Ver mi informacion");
-            System.out.println("5  Cerrar sesion");
-            System.out.print("> "); // para que el usuario escruba
 
-            if (leer.hasNextInt()) {
-                opc = leer.nextInt();
-                leer.nextLine();
+// se modifico completamente para que funcionen las opciones del menu
+            do {
 
-                switch (opc) {
-                    case 1 -> {
-                        System.out.println("\n-Libros disponibles -");
-                        for (int i = 0; i < nombreLibro.size(); i++) {
-                            System.out.println((i + 1) + ". " + nombreLibro.get(i)
-                                    + "Autor: " + autorLibro.get(i)
-                                    + "Estado: " + estado.get(i));
+                System.out.println("\n= MENU USUARIO =");
+                System.out.println("1. Ver libros disponibles");
+                System.out.println("2. Buscar libro");
+                System.out.println("3. Pedir libro");
+                System.out.println("4. Devolver libro");
+                System.out.println("5. Ver mis prestamos");
+                System.out.println("6. Ver mi informacion");
+                System.out.println("7. Cerrar sesion");
+                System.out.print("> ");
+
+                if (leer.hasNextInt()) {
+
+                    opc = leer.nextInt();
+                    leer.nextLine();
+
+                    switch (opc) {
+
+                        case 1 -> {
+
+                            System.out.println("\nLIBROS DISPONIBLES");
+
+                            for (int i = 0; i < nombreLibro.size(); i++) {
+
+                                System.out.println((i + 1) + ". " +
+                                        nombreLibro.get(i));
+
+                                System.out.println("Autor: " +
+                                        autorLibro.get(i));
+
+                                System.out.println("Estado: " +
+                                        estado.get(i));
+
+                                System.out.println("----------------------");
+                            }
+
                         }
-                    }// informacion de los libros
 
-                    case 2 -> {
-                        System.out.println("Función de prestamo");
+                        case 2 -> buscarLibro();
+
+                        case 3 -> pedirLibro();
+
+                        case 4 -> devolverLibro();
+
+                        case 5 -> verMisPrestamos();
+
+                        case 6 -> verMiInformacion();
+
+                        case 7 -> {
+
+                            usuarioActual = -1;
+
+                            System.out.println("Cerrando sesion...");
+
+                            menu();
+
+                            return;
+
+                        }
+
+                        default -> System.out.println("Opción invalida.");
+
                     }
 
-                    case 3 -> {
-                        System.out.println("Función de devolucion");
-                    }
+                } else {
 
-                    case 4 -> {
-                        System.out.println("Funcion para ver datos del usuario");
-                    }
+                    System.out.println("Debe ingresar un numero.");
 
-                    case 5 -> {
-                        System.out.println("Cerrando sesión...");
-                        menu();
-                        return;
-                    }
+                    leer.nextLine();
 
-                    default -> System.out.println("Opción invalida");
                 }
-            } else {
-                System.out.println("Debe ingresar un numero");
-                leer.nextLine();
-            }// son las opciones del menu
 
-        } while (true);
+            } while (true);
+
+        }
+    public static void buscarLibro() {
+// nuevo metodo para buscar los libros cuando el usurario lo solicite
+        // busca solo una parte del nombre y no distingue entre mayusculas y minusculas para que se le haga mas facil al usuriao encontrarlo
+        if (nombreLibro.size() == 0) {
+            System.out.println("No hay libros registrados.");
+            return;
+        }
+
+        System.out.println("= BUSCAR LIBRO =");
+        System.out.println("Ingrese el nombre del libro:");
+        String buscar = leer.nextLine();
+
+        boolean encontrado = false;
+
+        for (int i = 0; i < nombreLibro.size(); i++) {
+
+            if (nombreLibro.get(i).toLowerCase().contains(buscar.toLowerCase())) {
+
+                System.out.println("-------------------------");
+                System.out.println("Libro: " + nombreLibro.get(i));
+                System.out.println("Autor: " + autorLibro.get(i));
+                System.out.println("Estado: " + estado.get(i));
+
+                if (!comentarios.get(i).equalsIgnoreCase("Sin comentarios")) {
+                    System.out.println("Comentario: " + comentarios.get(i));
+                }
+
+                System.out.println("-------------------------");
+
+                encontrado = true;
+            }
+
+        }
+
+        if (!encontrado) {
+            System.out.println("No se encontro ningún libro con ese nombre.");
+        }
+
+    }
+    // Método para que el usuario pueda pedir un libro
+    public static void pedirLibro() {
+
+        // Verifica si existen libros registrados
+        if (nombreLibro.size() == 0) {
+            System.out.println("No hay libros registrados.");
+            return;
+        }
+
+        // Verifica si el usuario ya tiene un libro prestado
+        if (!libroPrest.get(usuarioActual).equals("Ninguno")) {
+            System.out.println("Ya tienes un libro prestado.");
+            System.out.println("Debes devolverlo antes de pedir otro.");
+            return;
+        }
+
+        System.out.println("== LIBROS DISPONIBLES ==");
+
+        boolean disponible = false;
+
+        // Muestra solamente los libros disponibles
+        for (int i = 0; i < nombreLibro.size(); i++) {
+
+            if (estado.get(i).equalsIgnoreCase("Disponible")) {
+
+                System.out.println(i + ". " + nombreLibro.get(i)
+                        + " | Autor: " + autorLibro.get(i));
+
+                disponible = true;
+            }
+
+        }
+
+        // Si no hay libros disponibles termina el metodo
+        if (!disponible) {
+            System.out.println("No hay libros disponibles.");
+            return;
+        }
+
+        System.out.print("Seleccione el número del libro: ");
+
+        if (leer.hasNextInt()) {
+
+            int libro = leer.nextInt();
+            leer.nextLine();
+
+            // Verifica que el numero exista
+            if (libro >= 0 && libro < nombreLibro.size()) {
+
+                // Comprueba nuevamente que el libro siga disponible
+                if (estado.get(libro).equalsIgnoreCase("Disponible")) {
+
+                    // Cambia el estado del libro
+                    estado.set(libro, "Prestado");
+
+                    // Guarda el nombre del libro en el usuario
+                    libroPrest.set(usuarioActual, nombreLibro.get(libro));
+
+                    System.out.println("--------------------------------");
+                    System.out.println("Prestamo realizado correctamente");
+                    System.out.println("Libro: " + nombreLibro.get(libro));
+                    System.out.println("--------------------------------");
+
+                } else {
+
+                    System.out.println("Ese libro ya fue prestado");
+
+                }
+
+            } else {
+
+                System.out.println("Libro inexistente");
+
+            }
+
+        } else {
+
+            System.out.println("Debe ingresar un numero");
+            leer.nextLine();
+
+        }
+
+    }
+    // metodo para que el usuario pueda devolver un libro
+    public static void devolverLibro() {
+
+        // verifica si el usuario tiene un libro prestado
+        if (libroPrest.get(usuarioActual).equals("Ninguno")) {
+            System.out.println("No tienes ningún libro prestado");
+            return;
+        }
+
+        System.out.println("= DEVOLVER LIBRO =");
+        System.out.println("libro prestado: " + libroPrest.get(usuarioActual));
+
+        System.out.print("¿Desea devolver este libro? (s/n): ");
+        String respuesta = leer.nextLine();
+
+        if (respuesta.equalsIgnoreCase("s")) {
+
+            // Busca el libro dentro de la lista
+            for (int i = 0; i < nombreLibro.size(); i++) {
+
+                if (nombreLibro.get(i).equals(libroPrest.get(usuarioActual))) {
+
+                    // Cambia el estado del libro a disponible
+                    estado.set(i, "Disponible");
+
+                    break;
+                }
+
+            }
+
+            // El usuario queda sin libros prestados
+            libroPrest.set(usuarioActual, "Ninguno");
+
+            System.out.println("---------------------------");
+            System.out.println("Libro devuelto correctamente");
+            System.out.println("---------------------------");
+
+        } else {
+
+            System.out.println("Operacion cancelada");
+
+        }
+
+    }
+    // metodo para mostrar el libro que tiene prestado el usuario
+    public static void verMisPrestamos() {
+
+        System.out.println("= MIS PRESTAMOS =");
+
+        // verifica si el usuario tiene un libro prestado
+        if (libroPrest.get(usuarioActual).equals("Ninguno")) {
+
+            System.out.println("no tienes libros prestados");
+
+        } else {
+
+            System.out.println("Libro prestado:");
+            System.out.println(libroPrest.get(usuarioActual));
+
+        }
+
+    }
+    // metodo para mostrar toda la informacion del usuario
+    public static void verMiInformacion() {
+
+        System.out.println("= MI INFORMACION =");
+
+        System.out.println("Nombre: " + nombreUser.get(usuarioActual));
+
+        System.out.println("Libro prestado: " + libroPrest.get(usuarioActual));
+
+        System.out.println("Sancion: " + sancion.get(usuarioActual));
+
+        System.out.println("Comentario: " + comentarios.get(usuarioActual));
+
     }
 
     public static void gestionLibro(){
         do{
-            System.out.println("-Gestion de libros");
-            System.out.println("1,Agregar libros");
+            System.out.println("Gestion de libros");
+            System.out.println("1.Agregar libros");
             System.out.println("2.Eliminar Libro");
             System.out.println("3.Ver lista de libros");
             System.out.println("4.Agregar comentario de libros");
@@ -286,7 +518,7 @@ public class Main {
                     case 1 ->{
                         System.out.println("Agregar libro");
 
-                        System.out.print("Nombre del librp");
+                        System.out.print("Nombwwre del libro");
                         String nuevoNombre = leer.nextLine();
                         System.out.print("Autor del libro");
                         String nuevoAutor = leer.nextLine();
