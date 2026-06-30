@@ -11,24 +11,26 @@ public class Main {
     static ArrayList<String> nombreLibro = new ArrayList<>(); // guarda los nombres de los nombreLibro
     static ArrayList<String> autorLibro = new ArrayList<>();// guarda el autor de cada libro
     static ArrayList<String> estado = new ArrayList<>();// guarda el estado del libro : true si el libro esta y false si el libro se lo llevaron prestado
-    static ArrayList<String> comentarios = new ArrayList<>();
+    static ArrayList<String> comentarios = new ArrayList<>(); // Comenta a los libros
     static ArrayList<Integer> sancion = new ArrayList<>();
     static ArrayList<String> libroPrest = new ArrayList<>();
+    static ArrayList<String> cometarioUser = new ArrayList<>();
     static int usuarioActual = -1;
+    static String vacio = "";
 
     public static void main(String[] args) {
         // Primer estudiante por defecto
         nombreUser.add("Tommy");
         passwordUser.add("1234");
-        comentarios.add("SIN COMENTARIO");
+        cometarioUser.add(vacio);
         sancion.add(0);
         libroPrest.add("Ninguno");
-
 
         // clase libro
         nombreLibro.add("Papelucho ");
         autorLibro.add("Marcela Paz");
         estado.add("Disponible");
+        comentarios.add(vacio);
 
         // Empieza todo
         menu();
@@ -77,12 +79,8 @@ public class Main {
     // Este es el inicio de sesión
     public static void inicioSesion(int opc) {
         // Solo un usuario admin
-
-
-
-            String UserAdmin = "admin";
+        String UserAdmin = "admin";
         String passwordAd = "1234";
-
 
         switch (opc) {
             case 1 -> {// administrador
@@ -117,8 +115,14 @@ public class Main {
 
                 System.out.println("1. iniciar sesion");
                 System.out.println("2. Salir");
-                eleccion = leer.nextInt();
-                leer.nextLine();
+                if (leer.hasNextInt()) {
+                    eleccion = leer.nextInt();
+                    leer.nextLine();
+                } else {
+                    System.out.println("Debe ingresar un número.");
+                    leer.nextLine();
+                    return;
+                }
 
                 if (eleccion == 1) {
                     int intentos = 3;
@@ -133,13 +137,10 @@ public class Main {
                         String passwordUser = leer.nextLine();
 
                         boolean Found = false;
-
                         for (int i = 0; i < nombreUser.size(); i++) {
-
 
                             if (username.equals(nombreUser.get(i)) &&
                                     passwordUser.equals(Main.passwordUser.get(i))) {
-
                                 usuarioActual = i;
                                 Found = true;
                                 break;
@@ -159,8 +160,7 @@ public class Main {
 
                 } else if (eleccion == 2){//regresar al menu
                     System.out.println("regresando al menu...");
-                   menu();
-
+                    menu();
                 } else {
                     System.out.println("Esta opcion no existe");
                     inicioSesion(2);
@@ -550,14 +550,11 @@ public class Main {
                                         System.out.print("¿Está seguro? (si/no): ");
                                         String confirmar = leer.nextLine();
                                         if (confirmar.equalsIgnoreCase("si")){
-                                            String nombreEliminar = nombreLibro.get(opc);
-                                            String autorEliminar = autorLibro.get(opc);
-                                            String estadoEliminar = estado.get(opc);
-                                            String comentarioEliminar = comentarios.get(opc);
-                                            nombreLibro.remove(nombreEliminar);
-                                            autorLibro.remove(autorEliminar);
-                                            estado.remove(estadoEliminar);
-                                            comentarios.remove(comentarioEliminar);
+
+                                            nombreLibro.remove(opc);
+                                            autorLibro.remove(opc);
+                                            estado.remove(opc);
+                                            comentarios.remove(opc);
                                             System.out.println("Libro elimidado correctamente");
                                         }else {
                                             System.out.println("Operacion cancelada");
@@ -772,20 +769,30 @@ public class Main {
                         }
                         System.out.println("1. seleccionar usuario");
                         System.out.println("2. salir");
-                        opc = leer.nextInt();
-                        leer.nextLine();
+                        if (leer.hasNextInt()) {
+                            opc = leer.nextInt();
+                            leer.nextLine();
+                        } else {
+                            System.out.println("Debe ingresar un número.");
+                            leer.nextLine();
+                            return;
+                        }
                         switch (opc){
                             case 1 -> {
                                 System.out.print("seleccione: ");
                                 if (leer.hasNextInt()){
                                     opc = leer.nextInt();
                                     leer.nextLine();
-                                    System.out.println("-- Datos generales --");
-                                    System.out.println("Nombre: "+nombreUser.get(opc));
-                                    System.out.println("Comentarios: "+comentarios.get(opc));
-                                    System.out.println("Sacion: "+sancion.get(opc));
-                                    System.out.println("Libro prestado: "+libroPrest.get(opc));
-                                    System.out.println("- - - - - - - - - - -");
+                                    if (opc >= 0 && opc < nombreUser.size()) {
+                                        System.out.println("-- Datos generales --");
+                                        System.out.println("Nombre: "+nombreUser.get(opc));
+                                        System.out.println("Comentarios: "+comentarios.get(opc));
+                                        System.out.println("Sacion: "+sancion.get(opc));
+                                        System.out.println("Libro prestado: "+libroPrest.get(opc));
+                                        System.out.println("- - - - - - - - - - -");
+                                    } else {
+                                        System.out.println("Usuario inexistente.");
+                                    }
                                 } else {
                                     System.out.println("Dato inválido");
                                 }
