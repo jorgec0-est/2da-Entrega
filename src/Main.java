@@ -550,14 +550,10 @@ public class Main {
                                         System.out.print("¿Está seguro? (si/no): ");
                                         String confirmar = leer.nextLine();
                                         if (confirmar.equalsIgnoreCase("si")){
-                                            String nombreEliminar = nombreLibro.get(opc);
-                                            String autorEliminar = autorLibro.get(opc);
-                                            String estadoEliminar = estado.get(opc);
-                                            String comentarioEliminar = comentarios.get(opc);
-                                            nombreLibro.remove(nombreEliminar);
-                                            autorLibro.remove(autorEliminar);
-                                            estado.remove(estadoEliminar);
-                                            comentarios.remove(comentarioEliminar);
+                                            nombreLibro.remove(opc);
+                                            autorLibro.remove(opc);
+                                            estado.remove(opc);
+                                            comentarios.remove(opc);
                                             System.out.println("Libro elimidado correctamente");
                                         }else {
                                             System.out.println("Operacion cancelada");
@@ -772,26 +768,42 @@ public class Main {
                         }
                         System.out.println("1. seleccionar usuario");
                         System.out.println("2. salir");
-                        opc = leer.nextInt();
-                        leer.nextLine();
-                        switch (opc){
-                            case 1 -> {
-                                System.out.print("seleccione: ");
-                                if (leer.hasNextInt()){
-                                    opc = leer.nextInt();
-                                    leer.nextLine();
-                                    System.out.println("-- Datos generales --");
-                                    System.out.println("Nombre: "+nombreUser.get(opc));
-                                    System.out.println("Comentarios: "+comentarios.get(opc));
-                                    System.out.println("Sacion: "+sancion.get(opc));
-                                    System.out.println("Libro prestado: "+libroPrest.get(opc));
-                                    System.out.println("- - - - - - - - - - -");
-                                } else {
-                                    System.out.println("Dato inválido");
+                        if (leer.hasNextInt()) {
+                            opc = leer.nextInt();
+                            leer.nextLine();
+                            switch (opc) {
+                                case 1 -> {
+                                    System.out.print("seleccione: ");
+                                    if (leer.hasNextInt()) {
+                                        opc = leer.nextInt();
+                                        leer.nextLine();
+                                        if (opc >= 0 && opc < nombreUser.size()) {
+                                            System.out.println("-- Datos generales --");
+                                            System.out.println("Nombre: " + nombreUser.get(opc));
+                                            System.out.println("Comentarios: " + comentarios.get(opc));
+                                            System.out.println("Sacion: " + sancion.get(opc));
+                                            System.out.println("Libro prestado: " + libroPrest.get(opc));
+                                            System.out.println("- - - - - - - - - - -");
+                                        }else{
+                                            System.out.println("usuario no existente");
+                                        }
+                                    } else {
+                                        System.out.println("Dato invalido");
+                                        leer.nextLine();
+                                    }
+
                                 }
+                                case 2 -> System.out.println("Volviendo...");
+                                default -> System.out.println("Opción inválida");
                             }
+                        }else{
+                            System.out.println("Debe ingresar un numero");
+                            leer.nextLine();
                         }
+
                     }
+
+
                     case 5 -> {
                         System.out.println("Saliendo de gestión de usuarios...");
                         return;
