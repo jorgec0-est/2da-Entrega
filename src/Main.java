@@ -117,8 +117,15 @@ public class Main {
 
                 System.out.println("1. iniciar sesion");
                 System.out.println("2. Salir");
-                eleccion = leer.nextInt();
-                leer.nextLine();
+                if(leer.hasNextInt()){
+                    eleccion = leer.nextInt();
+                    leer.nextLine();
+                }else{
+                    System.out.println("Debe ingresar un número.");
+                    leer.nextLine();
+                    eleccion = 0;
+                }
+
 
                 if (eleccion == 1) {
                     int intentos = 3;
@@ -819,53 +826,98 @@ public class Main {
     }
 
     public static void gestionarPrestYDev(){
-        System.out.println("-- Préstamos y devoluciones --");
-        System.out.println("1. Registrar préstamo");
-        System.out.println("2. Registrar devolución");
-        System.out.println("3-. Salir");
-        System.out.print("> ");
-        opc = leer.nextInt();
-        leer.nextLine();
-        switch (opc) {
-            case 1 -> {
-                System.out.println("-- Registrando préstamo --");
-                // Hay libros?
-                if (nombreLibro.size() == 0) {
-                    System.out.println("No hay libros para prestar.");
-                    return;
-                }
-                // Mostrar libros
-                for (int i = 0; i < nombreLibro.size(); i++) {
-                    System.out.println(i + ".- " + nombreLibro.get(i));
-                }
+        do {
+            System.out.println("-- Préstamos y devoluciones --");
+            System.out.println("1. Registrar préstamo");
+            System.out.println("2. Registrar devolución");
+            System.out.println("3. Salir");
+            System.out.print("> ");
 
-                System.out.println("Ingrese el libro que desea prestar");
-                System.out.print("> ");
-                if (leer.hasNextInt()) {
-                    opc = leer.nextInt();
-                    leer.nextLine();
-                    // Validar libro
-                    if (opc >= 0 && opc < nombreLibro.size()) {
-                        // cbros añadi esto para ver si el libro ya esta prestado
-                        if(estado.get(opc).equals("Prestado")){
-                            System.out.println("Este libro no esta disponible por el momento");
+            if (leer.hasNextInt()) {
+                opc = leer.nextInt();
+                leer.nextLine();
+                switch (opc) {
+                    case 1 -> {
+                        System.out.println("-- Registrando préstamo --");
+                        // Hay libros?
+                        if (nombreLibro.size() == 0) {
+                            System.out.println("No hay libros para prestar.");
                             return;
                         }
-                        // Mostrar usuarios
+                        // Mostrar libros
+                        for (int i = 0; i < nombreLibro.size(); i++) {
+                            System.out.println(i + ".- " + nombreLibro.get(i));
+                        }
+
+                        System.out.println("Ingrese el libro que desea prestar");
+                        System.out.print("> ");
+                        if (leer.hasNextInt()) {
+                            opc = leer.nextInt();
+                            leer.nextLine();
+                            // Validar libro
+                            if (opc >= 0 && opc < nombreLibro.size()) {
+                                // verifica si el libro ya esta prestado
+                                if(estado.get(opc).equals("Prestado")){
+                                    System.out.println("Este libro no esta disponible por el momento");
+                                    return;
+                                }
+                                // Mostrar usuarios
+                                for (int i = 0; i < nombreUser.size(); i++) {
+                                    System.out.println(i + ".- " + nombreUser.get(i));
+                                }
+                                System.out.println("Ingrese el usuario que recibirá el libro");
+                                System.out.print("> ");
+                                if (leer.hasNextInt()) {
+                                    int m = leer.nextInt();
+                                    leer.nextLine();
+                                    // Validar usuario
+                                    if (m >= 0 && m < nombreUser.size()) {
+                                        if (!libroPrest.get(m).equals("Ninguno")) {
+                                            System.out.println("Este usuario ya tiene un libro prestado.");
+                                        } else {
+                                            String libro = nombreLibro.get(opc);
+                                            libroPrest.set(m, libro);
+                                            estado.set(opc,"Prestado");
+                                            System.out.println("Préstamo registrado correctamente.");
+                                        }
+                                    } else {
+                                        System.out.println("Usuario inexistente.");
+                                    }
+                                } else {
+                                    System.out.println("Debe ingresar un número.");
+                                    leer.nextLine();
+                                }
+                            } else { System.out.println("Libro inexistente.");
+                            }
+                        } else {
+                            System.out.println("Debe ingresar un número.");
+                            leer.nextLine();
+                        }
+                    }
+                    case 2 -> {
+                        System.out.println("-- Registrando devolución --");
                         for (int i = 0; i < nombreUser.size(); i++) {
                             System.out.println(i + ".- " + nombreUser.get(i));
                         }
-                        System.out.println("Ingrese el usuario que recibirá el libro");
+                        System.out.println("Ingrese el usuario que devuelve el libro");
                         System.out.print("> ");
                         if (leer.hasNextInt()) {
                             int m = leer.nextInt();
                             leer.nextLine();
-                            // Validar usuario
                             if (m >= 0 && m < nombreUser.size()) {
-                                String libro = nombreLibro.get(opc);
-                                libroPrest.set(m, libro);
-                                estado.set(opc,"Prestado");
-                                System.out.println("Préstamo registrado correctamente.");
+                                if (libroPrest.get(m).equals("Ninguno")) {
+                                    System.out.println("Este usuario no tiene libros prestados.");
+                                } else {
+                                    String libro = libroPrest.get(m);
+                                    for (int i = 0; i < nombreLibro.size(); i++) {
+                                        if (nombreLibro.get(i).equals(libro)) {
+                                            estado.set(i, "Disponible");
+                                            break;
+                                        }
+                                    }
+                                    libroPrest.set(m, "Ninguno");
+                                    System.out.println("Devolución registrada correctamente.");
+                                }
                             } else {
                                 System.out.println("Usuario inexistente.");
                             }
@@ -873,21 +925,18 @@ public class Main {
                             System.out.println("Debe ingresar un número.");
                             leer.nextLine();
                         }
-                    } else { System.out.println("Libro inexistente.");
                     }
-                } else {
-                    System.out.println("Debe ingresar un número.");
-                    leer.nextLine();
+                    case 3 -> {
+                        System.out.println("Saliendo . . .");
+                        return;
+                    }
+                    default -> System.out.println("Opción inválida");
                 }
+            } else {
+                System.out.println("Debe ingresar un número.");
+                leer.nextLine();
             }
-            case 2 -> {// esto es lo que esta haciendo el hugo devolver libros
-                System.out.println(2);
-            }
-            case 3-> {
-                System.out.println("Saliendo . . .");
-                return;
-            }
-        }
+        } while (true);
     }
     // CREADORES: Jorge Curvivil - Daniel Huentenao - Hugo Iturra - Nicolas Espinoza
 }
