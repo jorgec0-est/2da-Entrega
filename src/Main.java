@@ -59,7 +59,8 @@ public class Main {
                     }
 
                     case 2 -> {
-                        System.out.println("-- Usuario normal --");System.out.println(" ");
+                        System.out.println("-- Usuario normal --");
+                        System.out.println(" ");
                         inicioSesion(2);
                         return;
                     }
@@ -81,8 +82,7 @@ public class Main {
         // Solo un usuario admin
 
 
-
-            String UserAdmin = "admin";
+        String UserAdmin = "admin";
         String passwordAd = "1234";
 
 
@@ -125,8 +125,9 @@ public class Main {
                 } else {
                     System.out.println("Debe ingresar un número.");
                     leer.nextLine();
-                    return;
+                    eleccion = 0;
                 }
+
 
                 if (eleccion == 1) {
                     int intentos = 3;
@@ -165,7 +166,7 @@ public class Main {
                         }
                     }
 
-                } else if (eleccion == 2){//regresar al menu
+                } else if (eleccion == 2) {//regresar al menu
                     System.out.println("regresando al menu...");
                     menu();
                 } else {
@@ -211,10 +212,10 @@ public class Main {
 
     }
 
-    public static void registrarAlumno(){//para crear nuevas cuentas de estudiantes
+    public static void registrarAlumno() {//para crear nuevas cuentas de estudiantes
         System.out.println("Registro nuevo alumno");
         System.out.println("ingrese el nombre de usuario del alumno");
-        String nuevoUser= leer.nextLine();
+        String nuevoUser = leer.nextLine();
 
         System.out.println("asigne una contraseña para el alumno");
         String nuevaPass = leer.nextLine();
@@ -231,82 +232,83 @@ public class Main {
     public static void MenuUser() {// menu de usuario
 
 // se modifico completamente para que funcionen las opciones del menu
-            do {
+        do {
 
-                System.out.println("\n= MENU USUARIO =");
-                System.out.println("1. Ver libros disponibles");
-                System.out.println("2. Buscar libro");
-                System.out.println("3. Pedir libro");
-                System.out.println("4. Devolver libro");
-                System.out.println("5. Ver mis prestamos");
-                System.out.println("6. Ver mi informacion");
-                System.out.println("7. Cerrar sesion");
-                System.out.print("> ");
+            System.out.println("\n= MENU USUARIO =");
+            System.out.println("1. Ver libros disponibles");
+            System.out.println("2. Buscar libro");
+            System.out.println("3. Pedir libro");
+            System.out.println("4. Devolver libro");
+            System.out.println("5. Ver mis prestamos");
+            System.out.println("6. Ver mi informacion");
+            System.out.println("7. Cerrar sesion");
+            System.out.print("> ");
 
-                if (leer.hasNextInt()) {
+            if (leer.hasNextInt()) {
 
-                    opc = leer.nextInt();
-                    leer.nextLine();
+                opc = leer.nextInt();
+                leer.nextLine();
 
-                    switch (opc) {
+                switch (opc) {
 
-                        case 1 -> {
+                    case 1 -> {
 
-                            System.out.println("\nLIBROS DISPONIBLES");
+                        System.out.println("\nLIBROS DISPONIBLES");
 
-                            for (int i = 0; i < nombreLibro.size(); i++) {
+                        for (int i = 0; i < nombreLibro.size(); i++) {
 
-                                System.out.println((i + 1) + ". " +
-                                        nombreLibro.get(i));
+                            System.out.println((i + 1) + ". " +
+                                    nombreLibro.get(i));
 
-                                System.out.println("Autor: " +
-                                        autorLibro.get(i));
+                            System.out.println("Autor: " +
+                                    autorLibro.get(i));
 
-                                System.out.println("Estado: " +
-                                        estado.get(i));
+                            System.out.println("Estado: " +
+                                    estado.get(i));
 
-                                System.out.println("----------------------");
-                            }
-
+                            System.out.println("----------------------");
                         }
-
-                        case 2 -> buscarLibro();
-
-                        case 3 -> pedirLibro();
-
-                        case 4 -> devolverLibro();
-
-                        case 5 -> verMisPrestamos();
-
-                        case 6 -> verMiInformacion();
-
-                        case 7 -> {
-
-                            usuarioActual = -1;
-
-                            System.out.println("Cerrando sesion...");
-
-                            menu();
-
-                            return;
-
-                        }
-
-                        default -> System.out.println("Opción invalida.");
 
                     }
 
-                } else {
+                    case 2 -> buscarLibro();
 
-                    System.out.println("Debe ingresar un numero.");
+                    case 3 -> pedirLibro();
 
-                    leer.nextLine();
+                    case 4 -> devolverLibro();
+
+                    case 5 -> verMisPrestamos();
+
+                    case 6 -> verMiInformacion();
+
+                    case 7 -> {
+
+                        usuarioActual = -1;
+
+                        System.out.println("Cerrando sesion...");
+
+                        menu();
+
+                        return;
+
+                    }
+
+                    default -> System.out.println("Opción invalida.");
 
                 }
 
-            } while (true);
+            } else {
 
-        }
+                System.out.println("Debe ingresar un numero.");
+
+                leer.nextLine();
+
+            }
+
+        } while (true);
+
+    }
+
     public static void buscarLibro() {
 // nuevo metodo para buscar los libros cuando el usurario lo solicite
         // busca solo una parte del nombre y no distingue entre mayusculas y minusculas para que se le haga mas facil al usuriao encontrarlo
@@ -346,6 +348,7 @@ public class Main {
         }
 
     }
+
     // Método para que el usuario pueda pedir un libro
     public static void pedirLibro() {
 
@@ -429,6 +432,7 @@ public class Main {
         }
 
     }
+
     // metodo para que el usuario pueda devolver un libro
     public static void devolverLibro() {
 
@@ -473,6 +477,7 @@ public class Main {
         }
 
     }
+
     // metodo para mostrar el libro que tiene prestado el usuario
     public static void verMisPrestamos() {
 
@@ -491,6 +496,7 @@ public class Main {
         }
 
     }
+
     // metodo para mostrar toda la informacion del usuario
     public static void verMiInformacion() {
 
@@ -506,8 +512,8 @@ public class Main {
 
     }
 
-    public static void gestionLibro(){
-        do{
+    public static void gestionLibro() {
+        do {
             System.out.println("Gestion de libros");
             System.out.println("1.Agregar libros");
             System.out.println("2.Eliminar Libro");
@@ -517,12 +523,12 @@ public class Main {
             System.out.println("6.Salir");
             System.out.println(" > ");
 
-            if (leer.hasNextInt()){//pregunto si escribio un numero, por si usuario usa nose letras
+            if (leer.hasNextInt()) {//pregunto si escribio un numero, por si usuario usa nose letras
                 opc = leer.nextInt();
                 leer.nextLine();
 
-                switch (opc){
-                    case 1 ->{
+                switch (opc) {
+                    case 1 -> {
                         System.out.println("Agregar libro");
 
                         System.out.print("Nombre del libro: ");
@@ -537,41 +543,40 @@ public class Main {
                         System.out.println("libro agregado ");
 
                     }
-                    case 2 ->{
+                    case 2 -> {
                         System.out.println("Eliminar libros");
 
-                        if(nombreLibro.size()==0){
+                        if (nombreLibro.size() == 0) {
                             System.out.println("No hay lirbos registrados");
 
-                        }else {
-                            for(int i =0; i <nombreLibro.size();i++)
-                                System.out.println(i+"-"+nombreLibro.get(i)+" Autor :"+autorLibro.get(i)+"Estado"+estado.get(i));
+                        } else {
+                            for (int i = 0; i < nombreLibro.size(); i++)
+                                System.out.println(i + "-" + nombreLibro.get(i) + " Autor :" + autorLibro.get(i) + "Estado" + estado.get(i));
                             System.out.print("Seleccione libro a eliminar: ");
-                            if(leer.hasNextInt()){
+                            if (leer.hasNextInt()) {
                                 int opc = leer.nextInt();
                                 leer.nextLine();
-                                if(opc >=0 && opc<nombreLibro.size()){
-                                    if (estado.get(opc).equals("Prestado")){
+                                if (opc >= 0 && opc < nombreLibro.size()) {
+                                    if (estado.get(opc).equals("Prestado")) {
                                         System.out.println("No se puede eliminar un libro prestado");
-                                    }else {
+                                    } else {
                                         System.out.print("¿Está seguro? (si/no): ");
                                         String confirmar = leer.nextLine();
-                                        if (confirmar.equalsIgnoreCase("si")){
-
+                                        if (confirmar.equalsIgnoreCase("si")) {
                                             nombreLibro.remove(opc);
                                             autorLibro.remove(opc);
                                             estado.remove(opc);
                                             comentarios.remove(opc);
                                             System.out.println("Libro elimidado correctamente");
-                                        }else {
+                                        } else {
                                             System.out.println("Operacion cancelada");
                                         }
                                     }
 
-                                }else{
+                                } else {
                                     System.out.println("Libro inexistente ");
                                 }
-                            }else{
+                            } else {
                                 System.out.println("Debe ingresar su numero");
                                 leer.nextLine();
                             }
@@ -579,13 +584,13 @@ public class Main {
                         }
 
                     }
-                    case 3 ->{
-                        if (nombreLibro.size()==0){
+                    case 3 -> {
+                        if (nombreLibro.size() == 0) {
                             System.out.println("No hay libros registrados");
-                        }else{
-                            System.out.println("Total libros: "+nombreLibro.size());
+                        } else {
+                            System.out.println("Total libros: " + nombreLibro.size());
                             for (int i = 0; i < nombreLibro.size(); i++) {
-                                System.out.println(i+". Nombre: "+nombreLibro.get(i));
+                                System.out.println(i + ". Nombre: " + nombreLibro.get(i));
                                 System.out.println("Autor: " + autorLibro.get(i));
                                 System.out.println("Estado: " + estado.get(i));
                                 System.out.println("Comentario: " + comentarios.get(i));
@@ -594,58 +599,57 @@ public class Main {
 
                         }
                     }
-                    case 4  ->{
-                        if (nombreLibro.size()==0){
+                    case 4 -> {
+                        if (nombreLibro.size() == 0) {
                             System.out.println("No hay libros registrados ");
-                        }else{
+                        } else {
                             for (int i = 0; i < nombreLibro.size(); i++)
-                                System.out.println(i+"-"+nombreLibro.get(i));
+                                System.out.println(i + "-" + nombreLibro.get(i));
                             System.out.println("seleccione un libro: ");
-                            if (leer.hasNextInt()){
-                                int opc =leer.nextInt();
+                            if (leer.hasNextInt()) {
+                                int opc = leer.nextInt();
                                 leer.nextLine();
-                                if (opc>= 0 && opc < nombreLibro.size()){
-                                    System.out.println("Comentario actual: "+comentarios.get(opc));
+                                if (opc >= 0 && opc < nombreLibro.size()) {
+                                    System.out.println("Comentario actual: " + comentarios.get(opc));
                                     System.out.print("Nuevo comentario ");
-                                    String nuevocomentario=leer.nextLine();
-                                    comentarios.set(opc ,  nuevocomentario);
+                                    String nuevocomentario = leer.nextLine();
+                                    comentarios.set(opc, nuevocomentario);
                                     System.out.println("comentario actualizado");
                                 }
 
-                            }else{
+                            } else {
                                 System.out.println("debe ingresar un numero ");
                                 leer.nextLine();
                             }
                         }
                     }
-                    case 5 ->{
-                        if (nombreLibro.size()==0){
+                    case 5 -> {
+                        if (nombreLibro.size() == 0) {
                             System.out.println("No hay libros registrados ");
-                        }else{
+                        } else {
                             for (int i = 0; i < nombreLibro.size(); i++)
-                                System.out.println(i+"- " + nombreLibro.get(i) + " Autor " + autorLibro.get(i));
+                                System.out.println(i + "- " + nombreLibro.get(i) + " Autor " + autorLibro.get(i));
                             System.out.println("Seleccion del libro a editar");
-                            if (leer.hasNextInt()){
-                                int opc=leer.nextInt();
+                            if (leer.hasNextInt()) {
+                                int opc = leer.nextInt();
                                 leer.nextLine();
-                                if (opc>=0&&opc<nombreLibro.size()){
-                                    System.out.println("Nuevo nombre"+nombreLibro.get(opc));
-                                    String nuevonombre=leer.nextLine();
+                                if (opc >= 0 && opc < nombreLibro.size()) {
+                                    System.out.println("Nuevo nombre" + nombreLibro.get(opc));
+                                    String nuevonombre = leer.nextLine();
                                     if (!nuevonombre.trim().isEmpty()) nombreLibro.set(opc, nuevonombre);
                                     System.out.println("libro editado correctamente");
 
 
-
-                                }else{
+                                } else {
                                     System.out.println("Libro inexistente.");
                                 }
-                            }else{
+                            } else {
                                 System.out.println("Debe ingresar un número.");
                                 leer.nextLine();
                             }
                         }
                     }
-                    case 6 ->{
+                    case 6 -> {
                         System.out.println("salida de gestion de libros");
                         return;
                     }
@@ -653,16 +657,16 @@ public class Main {
 
                 }
 
-            }else{
+            } else {
                 System.out.println("Debe ingresar un número.");
                 leer.nextLine();
             }
-        }while(true);
+        } while (true);
 
     }
 
     // gestion de usuario del menú admin
-    public static void gestionUsuario(){
+    public static void gestionUsuario() {
         do {
             System.out.println("-- Gestión de usuarios --");
             System.out.println("1. Agregar usuario");
@@ -780,18 +784,12 @@ public class Main {
                         if (leer.hasNextInt()) {
                             opc = leer.nextInt();
                             leer.nextLine();
-                        } else {
-                            System.out.println("Debe ingresar un número.");
-                            leer.nextLine();
-                            return;
-                        }
-                        switch (opc) {
-                            case 1 -> {
-                                System.out.print("seleccione: ");
-                                if (leer.hasNextInt()) {
-                                    opc = leer.nextInt();
-                                    leer.nextLine();
-                                    if (opc >= 0 && opc < nombreUser.size()) {
+                            switch (opc) {
+                                case 1 -> {
+                                    System.out.print("seleccione: ");
+                                    if (leer.hasNextInt()) {
+                                        opc = leer.nextInt();
+                                        leer.nextLine();
                                         if (opc >= 0 && opc < nombreUser.size()) {
                                             System.out.println("-- Datos generales --");
                                             System.out.println("Nombre: " + nombreUser.get(opc));
@@ -800,30 +798,31 @@ public class Main {
                                             System.out.println("Libro prestado: " + libroPrest.get(opc));
                                             System.out.println("- - - - - - - - - - -");
                                         } else {
-                                            System.out.println("Usuario inexistente.");
+                                            System.out.println("usuario no existente");
                                         }
                                     } else {
-                                        System.out.println("usuario no existente");
+                                        System.out.println("Dato invalido");
+                                        leer.nextLine();
                                     }
-                                } else {
-                                    System.out.println("Dato invalido");
-                                    leer.nextLine();
-                                }
-                            }
-                            case 2 -> System.out.println("Volviendo...");
-                            default -> System.out.println("Opción inválida");
-                        }
-                    }else{
-                        System.out.println("Debe ingresar un numero");
-                        leer.nextLine();
-                    }
-                case 5 -> {
-                    System.out.println("Saliendo de gestión de usuarios...");
-                    return;
-                }
-                default -> System.out.println("Opción inválida");
-            }
 
+                                }
+                                case 2 -> System.out.println("Volviendo...");
+                                default -> System.out.println("Opción inválida");
+                            }
+                        } else {
+                            System.out.println("Debe ingresar un numero");
+                            leer.nextLine();
+                        }
+
+                    }
+
+
+                    case 5 -> {
+                        System.out.println("Saliendo de gestión de usuarios...");
+                        return;
+                    }
+                    default -> System.out.println("Opción inválida");
+                }
             } else {
                 System.out.println("Ingrese un número válido");
                 leer.nextLine();
@@ -832,7 +831,7 @@ public class Main {
         // Fin gestión nombreUser
     }
 
-    public static void gestionarPrestYDev(){
+    public static void gestionarPrestYDev() {
         do {
             System.out.println("-- Préstamos y devoluciones --");
             System.out.println("1. Registrar préstamo");
@@ -864,7 +863,7 @@ public class Main {
                             // Validar libro
                             if (opc >= 0 && opc < nombreLibro.size()) {
                                 // verifica si el libro ya esta prestado
-                                if(estado.get(opc).equals("Prestado")){
+                                if (estado.get(opc).equals("Prestado")) {
                                     System.out.println("Este libro no esta disponible por el momento");
                                     return;
                                 }
@@ -884,7 +883,7 @@ public class Main {
                                         } else {
                                             String libro = nombreLibro.get(opc);
                                             libroPrest.set(m, libro);
-                                            estado.set(opc,"Prestado");
+                                            estado.set(opc, "Prestado");
                                             System.out.println("Préstamo registrado correctamente.");
                                         }
                                     } else {
@@ -894,7 +893,8 @@ public class Main {
                                     System.out.println("Debe ingresar un número.");
                                     leer.nextLine();
                                 }
-                            } else { System.out.println("Libro inexistente.");
+                            } else {
+                                System.out.println("Libro inexistente.");
                             }
                         } else {
                             System.out.println("Debe ingresar un número.");
@@ -946,4 +946,5 @@ public class Main {
         } while (true);
     }
     // CREADORES: Jorge Curvivil - Daniel Huentenao - Hugo Iturra - Nicolas Espinoza
+
 }
